@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# shalini-web
 
-## Getting Started
+Personal website for Shalini Mookerjee — a designer's portfolio built as an
+infinite-canvas, animation-heavy experience.
 
-First, run the development server:
+## Stack
+
+- **[Next.js](https://nextjs.org) 16** (App Router) + **React 19** + **TypeScript**
+- **[Tailwind CSS](https://tailwindcss.com)** for styling
+- **[Lenis](https://lenis.darkroom.engineering)** — smooth scrolling
+- **[GSAP](https://gsap.com)** — scroll-based / timeline animations
+- **[Rive](https://rive.app)** (`@rive-app/react-canvas`) — interactive animations
+- **[Framer Motion](https://www.framer.com/motion/)** — UI interactions & transitions
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command         | What it does                     |
+| --------------- | -------------------------------- |
+| `npm run dev`   | Start the dev server             |
+| `npm run build` | Production build                 |
+| `npm start`     | Run the production build locally |
+| `npm run lint`  | Lint the codebase                |
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  app/
+    layout.tsx        # Root layout — wraps the app in SmoothScroll
+    page.tsx          # Home page
+    globals.css       # Global styles + Tailwind
+  components/
+    SmoothScroll.tsx  # Lenis smooth-scroll provider (Client Component)
+public/               # Static assets (images, .riv files, etc.)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Note on animation libraries
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Lenis, Rive, and GSAP run in the browser only, so any component using them must
+be a Client Component — start the file with `"use client";`. `SmoothScroll.tsx`
+is the reference example.
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on [Vercel](https://vercel.com). Pushes to `main` deploy to production;
+pull requests get automatic preview deployments.
