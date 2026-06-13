@@ -11,8 +11,8 @@ posters. Clicking a poster opens a short detail card.
 | Layout          | Tidy grid / mosaic                                                     |
 | Data source     | **Letterboxd CSV export** (manual re-export) → committed `movies.json`. Posters/director enriched from **TMDB** by title+year via a re-runnable script. Fully static at runtime — no live feed. |
 | Sync model      | **Manual** — re-export from Letterboxd when she wants updates; regenerate `movies.json`; commit. (Letterboxd RSS auto-sync was considered and declined for predictability.) |
-| Interaction     | **Pan only** (like the reference) — drag + inertia, no zoom                |
-| Canvas engine   | **DOM-first**: GSAP Draggable + InertiaPlugin on a grid plane + `next/image` + viewport culling. Upgrade path to **WebGL (OGL)** only if a few hundred posters don't hold 60fps |
+| Interaction     | **Infinite pan** — drag + inertia in all directions, no zoom               |
+| Canvas engine   | **DOM infinite lattice**: GSAP Draggable (on a detached proxy) + InertiaPlugin feed an `offset`; a `gsap.ticker` translates the stage and re-renders only the visible window of cells (culling built in). Movie at cell (gx,gy) = `DECK[(gx + 7·gy) mod N]` so the wall is endless, seamless, and never shows the same poster adjacent (nearest repeat ~7 cells away, off-screen). Sizes: poster 240×360, gap 64. Upgrade path to **WebGL (OGL)** only if hundreds don't hold 60fps |
 | Data richness   | **Lean** — poster + notes (no per-movie Rive or theme colors)              |
 | Card transition | Framer Motion shared-element morph (`layoutId`) — poster becomes card  |
 

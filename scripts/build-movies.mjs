@@ -106,14 +106,16 @@ const [watched, ratings, reviews] = await Promise.all([
   readCsv(exportDir, "reviews.csv"),
 ]);
 
-// index ratings + reviews by Letterboxd URI
+// Ratings use the film's Letterboxd URI (matches watched.csv), but reviews use
+// the *review entry's* URI — so reviews must be joined by title+year instead.
 const ratingByUri = new Map(ratings.map((r) => [r["Letterboxd URI"], r.Rating]));
-const reviewByUri = new Map(reviews.map((r) => [r["Letterboxd URI"], r]));
+const titleKey = (name, year) => `${name}__${year}`;
+const reviewByTitle = new Map(reviews.map((r) => [titleKey(r.Name, r.Year), r]));
 
 // merge into a base list (watched = the canonical set of films)
 const merged = watched.map((w) => {
   const uri = w["Letterboxd URI"];
-  const rev = reviewByUri.get(uri);
+  const rev = reviewByTitle.get(titleKey(w.Name, w.Year));
   const ratingRaw = ratingByUri.get(uri) ?? rev?.Rating ?? "";
   return {
     title: w.Name,
@@ -127,7 +129,7 @@ const merged = watched.map((w) => {
 });
 
 console.log(
-  `🎬 ${merged.length} watched · ${ratingByUri.size} rated · ${reviewByUri.size} reviewed`
+  `🎬 ${merged.length} watched · ${ratingByUri.size} rated · ${reviewByTitle.size} reviewed`
 );
 
 if (DRY) {
