@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "movies": "node --env-file=.env.local scripts/build-movies.mjs",
+    "movies:dry": "node scripts/build-movies.mjs --dry"
   },
   "dependencies": {
     "@rive-app/react-canvas": "^4.29.0",
@@ -22,6 +24,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "csv-parse": "^6.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
