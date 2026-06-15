@@ -14,8 +14,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shalini Mookerjee",
+  metadataBase: new URL("https://www.shalini.one"),
+  title: {
+    default: "Shalini Mookerjee",
+    template: "%s — Shalini Mookerjee",
+  },
   description: "Designer. Personal site.",
+  openGraph: {
+    type: "website",
+    siteName: "Shalini Mookerjee",
+    url: "https://www.shalini.one",
+    title: "Shalini Mookerjee",
+    description: "Designer. Personal site.",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({

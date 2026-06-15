@@ -131,6 +131,15 @@ export default function MovieWall() {
       },
     })[0];
 
+    // two-finger trackpad / mouse wheel panning
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      gsap.killTweensOf(proxy); // stop any in-flight inertia throw
+      offset.current.x -= e.deltaX;
+      offset.current.y -= e.deltaY;
+    };
+    viewport.addEventListener("wheel", onWheel, { passive: false });
+
     const onResize = () => {
       vw = viewport.clientWidth;
       vh = viewport.clientHeight;
@@ -140,6 +149,7 @@ export default function MovieWall() {
     return () => {
       gsap.ticker.remove(tick);
       drag?.kill();
+      viewport.removeEventListener("wheel", onWheel);
       window.removeEventListener("resize", onResize);
     };
   }, []);
